@@ -1,0 +1,33 @@
+# SyBountyTask Configuration
+
+# Service fee rate (0.0 - 1.0, e.g., 0.05 = 5%)
+service-fee: 0.05
+
+# Maximum tasks a player can publish per day
+max-daily-tasks: 10
+
+# Auto-delete tasks older than X days
+auto-delete-days: 7
+
+# Database file name
+database-file: "tasks.db"
+
+# Messages
+messages:
+  prefix: "&6[悬赏任务] &r"
+  task-created: "&a任务创建成功！任务ID: &e%id%"
+  task-deleted: "&c任务已删除！"
+  task-claimed: "&a你已成功认领任务: &e%title%"
+  task-completed: "&a任务已完成，等待发布者验收..."
+  task-confirmed: "&a任务验收完成，报酬已发放！"
+  task-not-found: "&c任务不存在！"
+  task-already-claimed: "&c该任务已被认领！"
+  task-not-yours: "&c这不是你的任务！"
+  not-enough-money: "&c你的余额不足！"
+  max-tasks-reached: "&c你今天发布的任务数量已达上限！"
+  broadcast-format: "&6[任务广播] &e%player% &f发布了一个新任务: &a%title% &7(ID: %id%)"
+  material-complete: "&a玩家 &e%player% &a已完成物资任务，请点击下方按钮领取物资！"
+  build-complete: "&a玩家 &e%player% &a已完成建造任务，请前往验收！"
+  monster-complete: "&a玩家 &e%player% &a已完成打怪任务，请确认验收！"
+  received-material: "&a你已成功领取物资！"
+  received-reward: "&a你已获得报酬: &e%amount%&a！"

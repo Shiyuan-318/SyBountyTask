@@ -1,0 +1,24 @@
+name: SyBountyTask
+version: 1.0.0
+main: com.sy.bountytasks.SyBountyTask
+api-version: '1.21'
+author: Shiyuan
+description: A bounty task plugin with Vault integration
+
+depend:
+  - Vault
+
+commands:
+  sybt:
+    description: Main command for SyBountyTask
+    usage: /sybt <open|task|get|br|complete|confirm|delete>
+    permission: sybt.use
+    permission-message: You do not have permission to use this command.
+
+permissions:
+  sybt.use:
+    description: Allows using basic SyBountyTask commands
+    default: true
+  sybt.admin:
+    description: Allows using admin commands
+    default: op

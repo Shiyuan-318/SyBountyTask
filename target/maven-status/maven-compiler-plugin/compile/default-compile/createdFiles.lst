@@ -1,0 +1,13 @@
+com\sy\bountytasks\command\CommandHandler$1.class
+com\sy\bountytasks\command\CommandHandler.class
+com\sy\bountytasks\task\BountyTask.class
+com\sy\bountytasks\gui\GUIManager$GUIHolder.class
+com\sy\bountytasks\economy\EconomyManager.class
+com\sy\bountytasks\gui\GUIListener.class
+com\sy\bountytasks\gui\GUIManager.class
+com\sy\bountytasks\task\BountyTask$TaskStatus.class
+com\sy\bountytasks\database\DatabaseManager.class
+com\sy\bountytasks\task\TaskType.class
+com\sy\bountytasks\SyBountyTask.class
+com\sy\bountytasks\command\SyBTCommand.class
+com\sy\bountytasks\gui\GUIManager$1.class
