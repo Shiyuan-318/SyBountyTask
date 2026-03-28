@@ -208,8 +208,60 @@ public class CommandHandler {
                 player.sendMessage(ChatColor.RED + "请手持需要提交的物资！");
                 return;
             }
+            
+            player.sendMessage(ChatColor.GOLD + "========== 确认提交物资 ==========");
+            player.sendMessage(ChatColor.YELLOW + "任务: " + ChatColor.WHITE + activeTask.getTitle());
+            player.sendMessage(ChatColor.YELLOW + "手持物品: " + ChatColor.AQUA + mainHand.getAmount() + "x " + mainHand.getType().name());
+            player.sendMessage(ChatColor.GRAY + "请确认你要提交手中的物品");
+            
+            Component confirmButton = LegacyComponentSerializer.legacySection()
+                    .deserialize(ChatColor.GREEN + "[提交手持物品]")
+                    .clickEvent(ClickEvent.runCommand("/sybt submit " + activeTask.getId()))
+                    .hoverEvent(HoverEvent.showText(LegacyComponentSerializer.legacySection()
+                            .deserialize(ChatColor.YELLOW + "点击确认提交手中物品")));
+            player.sendMessage(confirmButton);
+            player.sendMessage(ChatColor.GOLD + "==================================");
+            return;
         }
 
+        completeTask(player, activeTask);
+    }
+
+    public void handleSubmitMaterial(Player player, int taskId) {
+        BountyTask activeTask = plugin.getDatabaseManager().getTask(taskId);
+        
+        if (activeTask == null) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.getConfig().getString("messages.prefix", "") +
+                            plugin.getConfig().getString("messages.task-not-found", "")));
+            return;
+        }
+
+        if (!player.getUniqueId().equals(activeTask.getClaimerUuid())) {
+            player.sendMessage(ChatColor.RED + "这不是你认领的任务！");
+            return;
+        }
+
+        if (activeTask.getStatus() != BountyTask.TaskStatus.CLAIMED) {
+            player.sendMessage(ChatColor.RED + "此任务当前状态无法提交完成！");
+            return;
+        }
+
+        if (activeTask.getType() != TaskType.MATERIAL) {
+            player.sendMessage(ChatColor.RED + "此指令仅用于物资任务！");
+            return;
+        }
+
+        ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (mainHand.getType() == Material.AIR) {
+            player.sendMessage(ChatColor.RED + "请手持需要提交的物资！");
+            return;
+        }
+
+        completeTask(player, activeTask);
+    }
+
+    private void completeTask(Player player, BountyTask activeTask) {
         activeTask.setStatus(BountyTask.TaskStatus.COMPLETED);
         if (plugin.getDatabaseManager().updateTask(activeTask)) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',

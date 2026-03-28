@@ -111,6 +111,22 @@ public class SyBTCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.RED + "任务ID必须是数字！");
                 }
             }
+            case "submit" -> {
+                if (!player.hasPermission("sybt.use")) {
+                    player.sendMessage(ChatColor.RED + "你没有权限使用此命令！");
+                    return true;
+                }
+                if (args.length < 2) {
+                    player.sendMessage(ChatColor.RED + "用法: /sybt submit <任务ID>");
+                    return true;
+                }
+                try {
+                    int taskId = Integer.parseInt(args[1]);
+                    commandHandler.handleSubmitMaterial(player, taskId);
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.RED + "任务ID必须是数字！");
+                }
+            }
             case "confirm" -> {
                 if (!player.hasPermission("sybt.use")) {
                     player.sendMessage(ChatColor.RED + "你没有权限使用此命令！");
@@ -165,6 +181,7 @@ public class SyBTCommand implements CommandExecutor, TabCompleter {
         player.sendMessage(ChatColor.YELLOW + "/sybt get <任务ID> " + ChatColor.GRAY + "- 认领任务");
         player.sendMessage(ChatColor.YELLOW + "/sybt br <任务ID> " + ChatColor.GRAY + "- 广播宣传任务");
         player.sendMessage(ChatColor.YELLOW + "/sybt complete <任务ID> " + ChatColor.GRAY + "- 提交任务完成");
+        player.sendMessage(ChatColor.YELLOW + "/sybt submit <任务ID> " + ChatColor.GRAY + "- 确认提交物资");
         player.sendMessage(ChatColor.YELLOW + "/sybt confirm <任务ID> " + ChatColor.GRAY + "- 确认验收任务");
         player.sendMessage(ChatColor.YELLOW + "/sybt delete <任务ID> " + ChatColor.GRAY + "- 删除未认领的任务");
         if (player.hasPermission("sybt.admin")) {
@@ -178,7 +195,7 @@ public class SyBTCommand implements CommandExecutor, TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
-            List<String> subCommands = Arrays.asList("open", "task", "get", "br", "complete", "confirm", "delete");
+            List<String> subCommands = Arrays.asList("open", "task", "get", "br", "complete", "submit", "confirm", "delete");
             if (sender.hasPermission("sybt.admin")) {
                 subCommands = new ArrayList<>(subCommands);
                 subCommands.add("reload");
